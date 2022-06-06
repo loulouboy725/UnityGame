@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
+    private Rigidbody2D body;
+
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+    }
     void Update()
     {
-        float dt = Time.deltaTime;
-        if (Input.GetKey(KeyCode.A))
+        body.velocity = new Vector2(Input.GetAxis("Horizontal") * 10, body.velocity.y);
+        if (Input.GetKey(KeyCode.Space))
         {
-            transform.position = new Vector2(transform.position.x + (dt * -5), transform.position.y);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position = new Vector2(transform.position.x + (dt * 5), transform.position.y);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y + dt * 5);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - dt * 5);
+            body.velocity = new Vector2(body.velocity.x, 10);
         }
     }
 }
