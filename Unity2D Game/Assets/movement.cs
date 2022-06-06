@@ -5,6 +5,7 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     private Rigidbody2D body;
+    bool grounded;
 
     void Awake()
     {
@@ -13,9 +14,21 @@ public class movement : MonoBehaviour
     void Update()
     {
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * 10, body.velocity.y);
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && grounded == true)
         {
-            body.velocity = new Vector2(body.velocity.x, 10);
+           jump();
+        }
+    }
+    void jump()
+    {
+        body.velocity = new Vector2(body.velocity.x, 10);
+        grounded = false;
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            grounded = true;
         }
     }
 }
